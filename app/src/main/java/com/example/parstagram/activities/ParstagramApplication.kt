@@ -3,10 +3,16 @@ package com.example.parstagram.activities
 import android.app.Application
 import com.example.parstagram.R
 import com.parse.Parse
+import com.parse.ParseObject
 
 class ParstagramApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        // Register your parse models
+        ParseObject.registerSubclass(Post::class.java)
+
+        // Add your initialization code here
         Parse.initialize(
             Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.back4app_app_id))
