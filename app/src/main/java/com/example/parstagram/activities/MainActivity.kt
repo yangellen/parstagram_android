@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
             }else{
                 Log.e(TAG,"Successfully saved post")
                 Toast.makeText(this, "Successfully saved post", Toast.LENGTH_SHORT).show()
+                post.setDescrption("")
             }
         }
 
