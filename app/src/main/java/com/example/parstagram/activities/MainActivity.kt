@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        findViewById<Button>(R.id.btnLogout).setOnClickListener{
+            logout()
+        }
+
         findViewById<Button>(R.id.btnSubmit).setOnClickListener{
             val description = findViewById<EditText>(R.id.description).text.toString()
             val user = ParseUser.getCurrentUser()
@@ -36,7 +40,6 @@ class MainActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show()
             }
-
         }
 
         findViewById<Button>(R.id.btnTakePicture).setOnClickListener{
@@ -60,6 +63,17 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun logout(){
+        ParseUser.logOut()
+        goToLoginActivity()
+    }
+
+    private fun goToLoginActivity(){
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     fun onLaunchCamera() {
