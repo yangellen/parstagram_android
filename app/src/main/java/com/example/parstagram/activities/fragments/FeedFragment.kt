@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.parstagram.R
 import com.example.parstagram.activities.MainActivity
 import com.example.parstagram.activities.Post
@@ -23,6 +24,10 @@ open class FeedFragment : Fragment() {
 
     var allPosts: MutableList<Post> = mutableListOf()
 
+    lateinit var swipeContainer: SwipeRefreshLayout
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,9 +38,22 @@ open class FeedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        swipeContainer = view.findViewById(R.id.swipeContainer)
+        // Setup refresh listener which triggers new data loading
+
+        swipeContainer.setOnRefreshListener {
+            queryPosts()
+        }
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light);
         postsRecyclerView = view.findViewById(R.id.postRecyclerView)
 
-        adapter = PostAdapter(requireContext(), allPosts)
+        adapter = PostAdapter(requireContext(), allPosts as ArrayList<Post>)
         postsRecyclerView.adapter = adapter
 
         postsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -55,6 +73,7 @@ open class FeedFragment : Fragment() {
                 if (e != null){
                     Log.e(TAG, "Error fetching posts")
                 } else {
+                    adapter.clear()
                     if(posts != null){
                         for (post in posts){
                             Log.i(
@@ -64,6 +83,7 @@ open class FeedFragment : Fragment() {
 
                         allPosts.addAll(posts)
                         adapter.notifyDataSetChanged()
+                        swipeContainer.isRefreshing = false
                     }
                 }
             }

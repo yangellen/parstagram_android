@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.parstagram.R
 
-class PostAdapter(val context: Context, val posts: List<Post>)
+class PostAdapter(val context: Context, val posts: ArrayList<Post>)
     : RecyclerView.Adapter<PostAdapter.ViewHolder> (){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
@@ -46,6 +46,17 @@ class PostAdapter(val context: Context, val posts: List<Post>)
             Glide.with(itemView.context).load(post.getImage()?.url).into(ivImage)
 
         }
+    }
+
+    fun clear() {
+        posts.clear()
+        notifyDataSetChanged()
+    }
+
+    // Add a list of items -- change to type used
+    fun addAll(Posts: List<Post>) {
+        posts.addAll(posts)
+        notifyDataSetChanged()
     }
 
 }
