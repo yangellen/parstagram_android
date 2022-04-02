@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.parstagram.R
 import com.example.parstagram.activities.fragments.ComposeFragment
 import com.example.parstagram.activities.fragments.FeedFragment
+import com.example.parstagram.activities.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.File
@@ -42,14 +43,13 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId){
 
                 R.id.action_home -> {
-                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
                     fragmentToShow = FeedFragment()
                 }
                 R.id.action_compose -> {
                     fragmentToShow = ComposeFragment()
                 }
                 R.id.action_profile -> {
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    fragmentToShow = ProfileFragment()
 
                 }
 
