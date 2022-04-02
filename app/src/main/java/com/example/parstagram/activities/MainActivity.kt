@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -28,10 +30,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        findViewById<Button>(R.id.btnLogout).setOnClickListener{
-            logout()
-        }
 
         val fragmentManager: FragmentManager = supportFragmentManager
 
@@ -63,6 +61,18 @@ class MainActivity : AppCompatActivity() {
         // Set default selection
         findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.action_home
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?) : Boolean {
+        menuInflater.inflate(R.menu.menu_top, menu);
+        return true;
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.logout){
+            logout()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun logout(){
